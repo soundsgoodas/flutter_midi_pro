@@ -36,7 +36,7 @@ class MethodChannelFlutterMidiPro extends FlutterMidiProPlatform {
   }
 
   @override
-  Future<Object?> reInitEngine() async {
+  Future<Object?> reInitEngineIOS() async {
     return methodChannel.invokeMethod('reInitEngine');
   }
 

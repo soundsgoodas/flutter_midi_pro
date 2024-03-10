@@ -35,6 +35,7 @@ public class FlutterMidiProPlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "reInitEngine":
         attachEngine()
+        result(nil)
     case "loadSoundfont":
         guard let map = call.arguments as? Dictionary<String, Any>,
               let sf2Data = map["sf2Data"] as? FlutterStandardTypedData else {

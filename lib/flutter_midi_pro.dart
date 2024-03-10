@@ -24,9 +24,9 @@ class MidiPro {
     }
   }
 
-  Future<Object?> reInitEngine() async {
+  Future<Object?> reInitEngineIOS() async {
     try {
-      return FlutterMidiProPlatform.instance.reInitEngine();
+      return FlutterMidiProPlatform.instance.reInitEngineIOS();
     } catch (e) {
       throw 'error reiniting engine: $e';
     }
