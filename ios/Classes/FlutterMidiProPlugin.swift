@@ -17,18 +17,24 @@ public class FlutterMidiProPlugin: NSObject, FlutterPlugin {
   }
 
   public override init() {
-    audioEngine.attach(samplerNode)
-    audioEngine.connect(samplerNode, to: audioEngine.mainMixerNode, format:nil)
-    do {
-        try audioEngine.start()
-    } catch {
-        print("Error starting audio engine: \(error.localizedDescription)")
-    }
+      super.init()
+      attachEngine()
   }
   
+    private func attachEngine() {
+        audioEngine.attach(samplerNode)
+        audioEngine.connect(samplerNode, to: audioEngine.mainMixerNode, format:nil)
+        do {
+            try audioEngine.start()
+        } catch {
+            print("Error starting audio engine: \(error.localizedDescription)")
+        }
+    }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
+    case "reInitEngine":
+        attachEngine()
     case "loadSoundfont":
         guard let map = call.arguments as? Dictionary<String, Any>,
               let sf2Data = map["sf2Data"] as? FlutterStandardTypedData else {

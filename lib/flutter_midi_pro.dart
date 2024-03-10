@@ -24,6 +24,14 @@ class MidiPro {
     }
   }
 
+  Future<Object?> reInitEngine() async {
+    try {
+      return FlutterMidiProPlatform.instance.reInitEngine();
+    } catch (e) {
+      throw 'error reiniting engine: $e';
+    }
+  }
+
   /// This function loads an instrument in a initialized soundfont file from the given path using the
   /// FlutterMidiProPlatform.
   /// Args:

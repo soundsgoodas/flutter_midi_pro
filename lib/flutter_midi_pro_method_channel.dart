@@ -12,8 +12,7 @@ class MethodChannelFlutterMidiPro extends FlutterMidiProPlatform {
 
   @override
   Future<Object?> loadSoundfont({required Uint8List sf2Data, required int instrumentIndex}) async {
-    return methodChannel
-        .invokeMethod('loadSoundfont', {'sf2Data': sf2Data, 'instrumentIndex': instrumentIndex});
+    return methodChannel.invokeMethod('loadSoundfont', {'sf2Data': sf2Data, 'instrumentIndex': instrumentIndex});
   }
 
   @override
@@ -34,6 +33,11 @@ class MethodChannelFlutterMidiPro extends FlutterMidiProPlatform {
   @override
   Future<Object?> stopAllMidiNotes() async {
     return methodChannel.invokeMethod('stopAllMidiNotes');
+  }
+
+  @override
+  Future<Object?> reInitEngine() async {
+    return methodChannel.invokeMethod('reInitEngine');
   }
 
   @override
