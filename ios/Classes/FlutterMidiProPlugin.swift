@@ -15,11 +15,6 @@ public class FlutterMidiProPlugin: NSObject, FlutterPlugin {
     let instance = FlutterMidiProPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
-
-  public override init() {
-      super.init()
-      attachEngine()
-  }
   
     private func attachEngine() {
         audioEngine.attach(samplerNode)
@@ -33,7 +28,7 @@ public class FlutterMidiProPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
-    case "reInitEngine":
+    case "initEngine":
         attachEngine()
         result(nil)
     case "loadSoundfont":

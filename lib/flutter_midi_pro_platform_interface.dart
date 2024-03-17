@@ -44,8 +44,8 @@ abstract class FlutterMidiProPlatform extends PlatformInterface {
     throw UnimplementedError('stopAllMidiNotes() has not been implemented.');
   }
 
-  Future<Object?> reInitEngineIOS() async {
-    throw UnimplementedError('reInitEngineIOS() has not been implemented.');
+  Future<Object?> initEngineIOS() async {
+    throw UnimplementedError('initEngineIOS() has not been implemented.');
   }
 
   Future<Object?> dispose() async {
