@@ -3,7 +3,8 @@ description: Demonstrates how to use the flutter_midi_pro plugin.
 publish_to: none
 version: 1.0.0+1
 environment:
-  sdk: ">=2.19.6 <3.0.0"
+  sdk: ">=3.4.3 <4.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
@@ -14,12 +15,12 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
-  cupertino_icons: ^1.0.2
-  flutter_piano_pro: ^0.2.0
+  cupertino_icons: ^1.0.8
+  flutter_piano_pro: ^0.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
 flutter:
   uses-material-design: true
   assets:
