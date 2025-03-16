@@ -51,7 +51,7 @@ class FlutterMidiProPlugin: FlutterPlugin, MethodCallHandler {
     when (call.method) {
       "loadSoundfont" -> {
         CoroutineScope(Dispatchers.IO).launch {
-          val path = call.argument<String>("path") as 5String
+          val path = call.argument<String>("path") as String
           val bank = call.argument<Int>("bank")?:0
           val program = call.argument<Int>("program")?:0
           val audioManager = flutterPluginBinding.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager

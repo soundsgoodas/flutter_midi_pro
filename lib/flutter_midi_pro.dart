@@ -20,8 +20,7 @@ class MidiPro {
 
   /// Loads a soundfont file from the specified asset path.
   /// Returns the sfId (SoundfontSamplerId).
-  Future<int> loadSoundfontAsset(
-      {required String assetPath, required int bank, required int program}) async {
+  Future<int> loadSoundfontAsset({required String assetPath, int bank = 0, int program = 0}) async {
     final tempDir = await getTemporaryDirectory();
     final tempFile = File('${tempDir.path}/${assetPath.split('/').last}');
     if (!tempFile.existsSync()) {
@@ -35,8 +34,7 @@ class MidiPro {
 
   /// Loads a soundfont file from the specified file path.
   /// Returns the sfId (SoundfontSamplerId).
-  Future<int> loadSoundfontFile(
-      {required String filePath, required int bank, required int program}) async {
+  Future<int> loadSoundfontFile({required String filePath, int bank = 0, int program = 0}) async {
     final tempDir = await getTemporaryDirectory();
     final tempFile = File('${tempDir.path}/${filePath.split('/').last}');
     if (!tempFile.existsSync()) {
@@ -48,12 +46,12 @@ class MidiPro {
 
   /// Loads a soundfont file from the specified data.
   /// Returns the sfId (SoundfontSamplerId).
-  Future<int> loadSoundfontData({required Uint8List data}) async {
+  Future<int> loadSoundfontData({required Uint8List data, int bank = 0, int program = 0}) async {
     final tempDir = await getTemporaryDirectory();
     final randomTempFileName = 'soundfont_${DateTime.now().millisecondsSinceEpoch}.sf2';
     final tempFile = File('${tempDir.path}/$randomTempFileName');
     tempFile.writeAsBytesSync(data);
-    return FlutterMidiProPlatform.instance.loadSoundfont(tempFile.path, 0, 0);
+    return FlutterMidiProPlatform.instance.loadSoundfont(tempFile.path, bank, program);
   }
 
   /// Selects an instrument on the specified soundfont.
