@@ -94,10 +94,10 @@ class MidiPro {
     required int key,
 
     /// The velocity of the note. This is a number from 0 to 127.
-    required int velocity,
+    int velocity = 127,
 
     /// The soundfont ID. First soundfont loaded is 1.
-    required int sfId,
+    int sfId = 1,
   }) async {
     return FlutterMidiProPlatform.instance.playNote(channel, key, velocity, sfId);
   }
@@ -116,7 +116,7 @@ class MidiPro {
     required int key,
 
     /// The soundfont ID. First soundfont loaded is 1.
-    required int sfId,
+    int sfId = 1,
   }) async {
     return FlutterMidiProPlatform.instance.stopNote(channel, key, sfId);
   }
