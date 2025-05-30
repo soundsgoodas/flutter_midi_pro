@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> {
       print('Soundfont file: $path already loaded. Returning ID.');
       return loadedSoundfonts.value.entries.firstWhere((element) => element.value == path).key;
     }
-    final int sfId = await midiPro.loadSoundfont(path: path, bank: bank, program: program);
+    final int sfId =
+        await midiPro.loadSoundfontAsset(assetPath: path, bank: bank, program: program);
     loadedSoundfonts.value = {sfId: path, ...loadedSoundfonts.value};
     print('Loaded soundfont file: $path with ID: $sfId');
     return sfId;

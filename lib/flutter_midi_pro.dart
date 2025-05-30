@@ -18,13 +18,13 @@ import 'package:path_provider/path_provider.dart';
 class MidiPro {
   MidiPro();
 
-  /// Loads a soundfont file from the specified path.
+  /// Loads a soundfont file from the specified asset path.
   /// Returns the sfId (SoundfontSamplerId).
-  Future<int> loadSoundfont({required String path, required int bank, required int program}) async {
+  Future<int> loadSoundfontAsset({required String assetPath, int bank = 0, int program = 0}) async {
     final tempDir = await getTemporaryDirectory();
-    final tempFile = File('${tempDir.path}/${path.split('/').last}');
+    final tempFile = File('${tempDir.path}/${assetPath.split('/').last}');
     if (!tempFile.existsSync()) {
-      final byteData = await rootBundle.load(path);
+      final byteData = await rootBundle.load(assetPath);
       final buffer = byteData.buffer;
       await tempFile.writeAsBytes(buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
     }
@@ -53,6 +53,28 @@ class MidiPro {
   //     throw 'error loading instrument: $e';
   //   }
   // }
+  /// Loads a soundfont file from the specified file path.
+  /// Returns the sfId (SoundfontSamplerId).
+  Future<int> loadSoundfontFile({required String filePath, int bank = 0, int program = 0}) async {
+    final tempDir = await getTemporaryDirectory();
+    final tempFile = File('${tempDir.path}/${filePath.split('/').last}');
+    if (!tempFile.existsSync()) {
+      final file = File(filePath);
+      await file.copy(tempFile.path);
+    }
+    return FlutterMidiProPlatform.instance.loadSoundfont(tempFile.path, bank, program);
+  }
+
+  /// Loads a soundfont file from the specified data.
+  /// Returns the sfId (SoundfontSamplerId).
+  Future<int> loadSoundfontData({required Uint8List data, int bank = 0, int program = 0}) async {
+    final tempDir = await getTemporaryDirectory();
+    final randomTempFileName = 'soundfont_${DateTime.now().millisecondsSinceEpoch}.sf2';
+    final tempFile = File('${tempDir.path}/$randomTempFileName');
+    tempFile.writeAsBytesSync(data);
+    return FlutterMidiProPlatform.instance.loadSoundfont(tempFile.path, bank, program);
+  }
+
   /// Selects an instrument on the specified soundfont.
   /// The soundfont ID is the ID returned by the [loadSoundfont] method.
   /// The channel is a number from 1 to 16.
@@ -93,10 +115,10 @@ class MidiPro {
     required int key,
 
     /// The velocity of the note. This is a number from 0 to 127.
-    required int velocity,
+    int velocity = 127,
 
     /// The soundfont ID. First soundfont loaded is 1.
-    required int sfId,
+    int sfId = 1,
   }) async {
     return FlutterMidiProPlatform.instance.playNote(channel, key, velocity, sfId);
   }
@@ -115,9 +137,17 @@ class MidiPro {
     required int key,
 
     /// The soundfont ID. First soundfont loaded is 1.
-    required int sfId,
+    int sfId = 1,
   }) async {
     return FlutterMidiProPlatform.instance.stopNote(channel, key, sfId);
+  }
+
+  /// Stops all notes on the specified sfId.
+  Future<void> stopAllNotes({
+    /// The soundfont ID. First soundfont loaded is 1.
+    int sfId = 1,
+  }) async {
+    return FlutterMidiProPlatform.instance.stopAllNotes(sfId);
   }
 
   /// Unloads a soundfont from memory.
